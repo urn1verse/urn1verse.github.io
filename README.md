@@ -1,4 +1,3 @@
-# urn1verse.github.io
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -7,7 +6,9 @@
 <title>Isi Piringku Challenge</title>
 
 <style>
-* { box-sizing: border-box; }
+* {
+    box-sizing: border-box;
+}
 
 body {
     margin: 0;
@@ -23,7 +24,10 @@ header {
     padding: 25px 15px;
 }
 
-header h1 { margin: 0; font-size: 30px; }
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
 
 .container {
     max-width: 950px;
@@ -31,7 +35,9 @@ header h1 { margin: 0; font-size: 30px; }
     padding: 20px;
 }
 
-h2 { color: #527d4e; }
+h2 {
+    color: #527d4e;
+}
 
 .instructions {
     background: #e8f2df;
@@ -71,7 +77,9 @@ h2 { color: #527d4e; }
     margin: 3px;
 }
 
-.zone small { font-size: 12px; }
+.zone small {
+    font-size: 12px;
+}
 
 .vegetable {
     background: #b8d99e;
@@ -97,21 +105,14 @@ h2 { color: #527d4e; }
     grid-row: 2;
 }
 
-.zone.correct {
-    background: #65c77a !important;
-    border: 3px solid #188b39;
-}
-
-.zone.incorrect {
-    background: #ff7777 !important;
-    border: 3px solid #d92323;
+.zone.hover {
+    outline: 3px solid #527d4e;
 }
 
 .zone-items {
     font-size: 12px;
     margin-top: 5px;
     word-break: break-word;
-    line-height: 1.5;
 }
 
 .food-list {
@@ -141,6 +142,10 @@ h2 { color: #527d4e; }
     border-color: #75a96b;
 }
 
+.food.dragging {
+    opacity: 0.5;
+}
+
 .food span {
     display: block;
     font-size: 30px;
@@ -150,20 +155,6 @@ h2 { color: #527d4e; }
 .food.used {
     opacity: 0.3;
     cursor: default;
-}
-
-.food.dragging { opacity: 0.4; }
-
-.score {
-    font-size: 18px;
-    font-weight: bold;
-    color: #527d4e;
-}
-
-#feedback {
-    font-weight: bold;
-    margin: 15px;
-    min-height: 25px;
 }
 
 button {
@@ -177,15 +168,31 @@ button {
     margin: 8px;
 }
 
-button:hover { background: #527d4e; }
+button:hover {
+    background: #527d4e;
+}
 
-@media(max-width:450px) {
+#feedback {
+    font-weight: bold;
+    margin: 15px;
+    min-height: 25px;
+}
+
+.score {
+    font-size: 18px;
+    font-weight: bold;
+    color: #527d4e;
+}
+
+@media(max-width: 450px) {
     .plate {
         width: 310px;
         height: 310px;
     }
 
-    header h1 { font-size: 24px; }
+    header h1 {
+        font-size: 24px;
+    }
 }
 </style>
 </head>
@@ -202,47 +209,46 @@ button:hover { background: #527d4e; }
     <div class="instructions">
         <h2>How to Play?</h2>
         <p>
-            Susun makanan ke dalam piring sesuai panduan Isi Piringku!
-            Perhatikan jenis dan jumlah makanan yang kamu masukkan.
-            Jangan sampai porsinya berlebihan!
+            Yuk, susun makanan bergizi ke dalam piring!
+            Drag setiap makanan ke bagian yang sesuai
+            dengan panduan Isi Piringku.
         </p>
-        <p>🟢 Hijau = Benar | 🔴 Merah = Salah</p>
     </div>
 
     <h2>🍽️ Susun Piringmu!</h2>
 
     <div class="plate">
 
-        <div class="zone vegetable" data-category="vegetable" data-max="4">
+        <div class="zone vegetable" data-category="vegetable">
             <h3>🥦 SAYURAN</h3>
-            <small>⅓ bagian (maks. 4)</small>
+            <small>⅓ bagian</small>
             <div class="zone-items"></div>
         </div>
 
-        <div class="zone fruit" data-category="fruit" data-max="2">
+        <div class="zone fruit" data-category="fruit">
             <h3>🍎 BUAH</h3>
-            <small>⅙ bagian (maks. 2)</small>
+            <small>⅙ bagian</small>
             <div class="zone-items"></div>
         </div>
 
-        <div class="zone staple" data-category="staple" data-max="4">
+        <div class="zone staple" data-category="staple">
             <h3>🍚 MAKANAN POKOK</h3>
-            <small>⅓ bagian (maks. 4)</small>
+            <small>⅓ bagian</small>
             <div class="zone-items"></div>
         </div>
 
-        <div class="zone protein" data-category="protein" data-max="2">
+        <div class="zone protein" data-category="protein">
             <h3>🍗 LAUK-PAUK</h3>
-            <small>⅙ bagian (maks. 2)</small>
+            <small>⅙ bagian</small>
             <div class="zone-items"></div>
         </div>
 
     </div>
 
     <h2>Pilih Makananmu!</h2>
-    <p>Drag makanan ke bagian piring yang tepat.</p>
+    <p>Geser makanan ke kategori yang tepat.</p>
 
-    <div class="food-list">
+    <div class="food-list" id="foodList">
 
         <div class="food" draggable="true" data-category="staple">
             <span>🍚</span>Nasi
@@ -254,10 +260,6 @@ button:hover { background: #527d4e; }
 
         <div class="food" draggable="true" data-category="staple">
             <span>🌽</span>Jagung
-        </div>
-
-        <div class="food" draggable="true" data-category="staple">
-            <span>🍞</span>Roti
         </div>
 
         <div class="food" draggable="true" data-category="vegetable">
@@ -272,10 +274,6 @@ button:hover { background: #527d4e; }
             <span>🥬</span>Bayam
         </div>
 
-        <div class="food" draggable="true" data-category="vegetable">
-            <span>🥒</span>Timun
-        </div>
-
         <div class="food" draggable="true" data-category="protein">
             <span>🍗</span>Ayam
         </div>
@@ -284,12 +282,20 @@ button:hover { background: #527d4e; }
             <span>🐟</span>Ikan
         </div>
 
+        <div class="food" draggable="true" data-category="protein">
+            <span>🥚</span>Telur
+        </div>
+
         <div class="food" draggable="true" data-category="fruit">
             <span>🍎</span>Apel
         </div>
 
         <div class="food" draggable="true" data-category="fruit">
             <span>🍌</span>Pisang
+        </div>
+
+        <div class="food" draggable="true" data-category="fruit">
+            <span>🍊</span>Jeruk
         </div>
 
     </div>
@@ -313,28 +319,10 @@ let draggedItem = null;
 const foods = document.querySelectorAll(".food");
 const zones = document.querySelectorAll(".zone");
 
-function showFeedback(message, color) {
-    const feedback = document.getElementById("feedback");
-    feedback.textContent = message;
-    feedback.style.color = color;
-}
-
-function markZone(zone, status) {
-    zone.classList.remove("correct", "incorrect");
-    zone.classList.add(status);
-
-    if (zone.timer) clearTimeout(zone.timer);
-
-    zone.timer = setTimeout(() => {
-        zone.classList.remove(status);
-    }, 1200);
-}
-
 foods.forEach(food => {
 
     food.addEventListener("dragstart", () => {
         if (food.classList.contains("used")) return;
-
         draggedItem = food;
         food.classList.add("dragging");
     });
@@ -345,7 +333,6 @@ foods.forEach(food => {
 
     food.addEventListener("touchstart", () => {
         if (food.classList.contains("used")) return;
-
         draggedItem = food;
         food.classList.add("dragging");
     }, {passive: true});
@@ -354,7 +341,6 @@ foods.forEach(food => {
         if (!draggedItem) return;
 
         const touch = e.changedTouches[0];
-
         const target = document.elementFromPoint(
             touch.clientX,
             touch.clientY
@@ -362,30 +348,29 @@ foods.forEach(food => {
 
         const zone = target?.closest(".zone");
 
-        if (zone) {
-            placeFood(zone);
-        } else {
-            showFeedback("Letakkan makanan di dalam piring!", "#d92323");
-        }
+        if (zone) placeFood(zone);
 
         food.classList.remove("dragging");
         draggedItem = null;
     });
-
 });
 
 zones.forEach(zone => {
 
     zone.addEventListener("dragover", e => {
         e.preventDefault();
+        zone.classList.add("hover");
+    });
+
+    zone.addEventListener("dragleave", () => {
+        zone.classList.remove("hover");
     });
 
     zone.addEventListener("drop", e => {
         e.preventDefault();
+        zone.classList.remove("hover");
 
-        if (draggedItem) {
-            placeFood(zone);
-        }
+        if (draggedItem) placeFood(zone);
     });
 
 });
@@ -394,63 +379,38 @@ function placeFood(zone) {
 
     if (!draggedItem) return;
 
-    const category = draggedItem.dataset.category;
+    const correct = draggedItem.dataset.category;
     const target = zone.dataset.category;
 
-    const max = Number(zone.dataset.max);
+    if (correct === target) {
 
-    const currentItems = zone.querySelector(".zone-items").children.length;
+        const item = document.createElement("span");
 
-    if (category !== target) {
+        item.textContent =
+            draggedItem.querySelector("span").textContent +
+            " " + draggedItem.textContent.trim();
 
-        markZone(zone, "incorrect");
+        zone.querySelector(".zone-items").appendChild(item);
 
-        showFeedback(
-            "❌ Salah kategori! Coba perhatikan jenis makanannya.",
-            "#d92323"
-        );
+        draggedItem.classList.add("used");
 
-        return;
-    }
+        score++;
 
-    if (currentItems >= max) {
+        document.getElementById("score").textContent = score;
 
-        markZone(zone, "incorrect");
+        document.getElementById("feedback").textContent =
+            "Benar! Makanan berhasil ditempatkan! 🎉";
 
-        showFeedback(
-            "❌ Porsinya berlebihan! Bagian ini sudah penuh.",
-            "#d92323"
-        );
+        if (score === 12) {
+            document.getElementById("feedback").textContent =
+                "Hebat! Semua makanan berhasil disusun! 🥗";
+        }
 
-        return;
-    }
+    } else {
 
-    const item = document.createElement("span");
+        document.getElementById("feedback").textContent =
+            "Ups! Coba tempatkan di kategori yang lain. 😊";
 
-    item.textContent =
-        draggedItem.querySelector("span").textContent +
-        " " + draggedItem.textContent.trim();
-
-    zone.querySelector(".zone-items").appendChild(item);
-
-    draggedItem.classList.add("used");
-
-    score++;
-
-    document.getElementById("score").textContent = score;
-
-    markZone(zone, "correct");
-
-    showFeedback(
-        "✅ Benar! Makanan berhasil ditempatkan!",
-        "#188b39"
-    );
-
-    if (score === 12) {
-        showFeedback(
-            "🏆 PERFECT! Kamu berhasil menyusun Isi Piringku dengan tepat!",
-            "#188b39"
-        );
     }
 
     draggedItem = null;
@@ -459,20 +419,12 @@ function placeFood(zone) {
 function checkResult() {
 
     if (score === 12) {
-
-        showFeedback(
-            "🏆 SELAMAT! Piringmu sudah tersusun dengan sempurna!",
-            "#188b39"
-        );
-
+        document.getElementById("feedback").textContent =
+            "🏆 PERFECT! Kamu berhasil menyusun seluruh Isi Piringku!";
     } else {
-
-        showFeedback(
+        document.getElementById("feedback").textContent =
             "Masih ada " + (12 - score) +
-            " makanan yang belum ditempatkan. Yuk, lengkapi!",
-            "#d92323"
-        );
-
+            " makanan yang belum ditempatkan. Semangat!";
     }
 
 }
@@ -483,18 +435,14 @@ function resetGame() {
     draggedItem = null;
 
     document.getElementById("score").textContent = 0;
-
-    showFeedback("Permainan dimulai kembali! Selamat bermain!", "#527d4e");
+    document.getElementById("feedback").textContent = "";
 
     foods.forEach(food => {
-        food.classList.remove("used", "dragging");
+        food.classList.remove("used");
     });
 
-    zones.forEach(zone => {
-        zone.querySelector(".zone-items").innerHTML = "";
-        zone.classList.remove("correct", "incorrect");
-
-        if (zone.timer) clearTimeout(zone.timer);
+    document.querySelectorAll(".zone-items").forEach(zone => {
+        zone.innerHTML = "";
     });
 
 }
